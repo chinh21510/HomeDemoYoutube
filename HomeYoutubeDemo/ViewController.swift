@@ -12,7 +12,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerView: UIView!
     var videos = [Video]()
-    
+    var historyVideo = [Video]()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -32,19 +32,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let video = videos[indexPath.row]
         let detailVideo: DetailVideoViewController = storyboard?.instantiateViewController(withIdentifier: "DetailVideoViewController") as! DetailVideoViewController
+        detailVideo.detailVideo = video
         detailVideo.requestChannel()
-        detailVideo.titleVideo = video.title
-        detailVideo.channelId = video.channelId
-        let date = getElapsedInterval(date: convertPublishing(publishedAt: video.publishedAt))
-        detailVideo.duration = date
-        let viewCount = reduceTheNumberOf(number: video.viewCount)
-        detailVideo.viewCount = viewCount
-        let likeCount = reduceTheNumberOf(number: video.likeCount)
-        detailVideo.likeCount = likeCount
-        let dislikeCount = reduceTheNumberOf(number: video.dislikeCount)
-        detailVideo.dislikeCount = dislikeCount
-        detailVideo.descriptionVideo = video.description
         self.navigationController?.pushViewController(detailVideo, animated: true)
+        HistoryManager.savedVideo(video: video)
     }
         
     func createShadowView() {
@@ -112,7 +103,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func convertPublishing(publishedAt: String) -> Date {
         let string = publishedAt
         let dateFormatter = DateFormatter()
-//        let tempLocale = dateFormatter.locale
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: string)!
@@ -136,7 +126,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func requestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyB_qQb1qd1wrTT-aAJptpyP_5Dzk547x-8")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyAMSIUrMAOkM_ZUyQeZ6B9ofGHChw5eClI")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -145,8 +135,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let snippet = item["snippet"] as! [String: Any]
                 let statistics = item["statistics"] as! [String: Any]
                 let publishedAt = snippet["publishedAt"] as! String
-                let view = statistics["viewCount"] as! String
-                let viewCount = Int(view)!
+                let viewCount = Int(statistics["viewCount"] as! String)!
                 let likeCount = Int(statistics["likeCount"] as! String)!
                 let dislikeCount = Int(statistics["dislikeCount"] as! String)!
                 let title = snippet["title"] as! String
