@@ -9,7 +9,9 @@
 import UIKit
 import RealmSwift
 
-class DetailVideoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DetailVideoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, YourCellDelegate {
+    
+    
     @IBOutlet weak var videoImage: UIView!
     @IBOutlet weak var detailTableView: UITableView!
     var viewController = ViewController()
@@ -44,7 +46,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         if indexPath.row == 0 {
-            return 140
+            return 150
         } else if indexPath.row == 1 {
             return 80
         } else if indexPath.row > 2 {
@@ -57,6 +59,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         if indexPath.row == 0 {
             let cell = detailTableView.dequeueReusableCell(withIdentifier: "TitleDetailVideoCell") as! TitleDetailVideoCell
             cell.titleLabel.text = detailVideo.title
+            cell.cellDelegate = self
 //            let duration = viewController.displayDuration(videoDurationAPI: detailVideo.duration)
             let viewCount = viewController.reduceTheNumberOf(number: detailVideo.viewCount)
             let dislikeCount = viewController.reduceTheNumberOf(number: detailVideo.dislikeCount)
@@ -160,5 +163,8 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
             }
         }
         task.resume()
+    }
+    func didPressButton() {
+        print("a")
     }
 }

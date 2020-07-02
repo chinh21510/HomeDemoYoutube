@@ -65,6 +65,9 @@
                             <constraint firstAttribute="width" secondItem="WdQ-WL-KOI" secondAttribute="height" multiplier="1:1" id="KDu-fD-s18"/>
                         </constraints>
                         <state key="normal" title="Button" image="save"/>
+                        <connections>
+                            <action selector="addVideoButton:" destination="inh-N0-l3l" eventType="touchUpInside" id="cFc-W0-8Zk"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Like" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRO-2c-5UW">
                         <rect key="frame" x="31" y="100" width="28" height="18"/>
@@ -137,6 +140,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="addButton" destination="WdQ-WL-KOI" id="HeM-HH-Oir"/>
                 <outlet property="disLikeCountLabel" destination="nVH-B0-eu4" id="1Ye-YH-n4Y"/>
                 <outlet property="dislikeButton" destination="0VK-b1-fWb" id="3v4-kO-zKN"/>
                 <outlet property="downloadButton" destination="cIW-MD-mYk" id="CuG-qI-LBX"/>

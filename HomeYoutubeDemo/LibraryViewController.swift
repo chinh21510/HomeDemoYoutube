@@ -11,8 +11,6 @@ import RealmSwift
 
 class LibraryViewController: UIViewController, UITableViewDataSource {
    
-    
-
     @IBOutlet weak var createPlaylist: UIButton!
     @IBOutlet weak var playlistTableView: UITableView!
     @IBOutlet weak var textView: UIView!
@@ -61,5 +59,6 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
     func loadPlaylist() {
         namesPlaylist = realm.objects(Playlist.self).sorted(byKeyPath: "name")
         playlistTableView.reloadData()
+        print(namesPlaylist as Any)
     }
 }

@@ -8,7 +8,12 @@
 
 import UIKit
 
+protocol YourCellDelegate: class {
+    func didPressButton()
+}
+
 class TitleDetailVideoCell: UITableViewCell {
+    var cellDelegate: YourCellDelegate?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
@@ -18,4 +23,10 @@ class TitleDetailVideoCell: UITableViewCell {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var disLikeCountLabel: UILabel!
+    @IBOutlet weak var addButton: UIButton!
+    
+    @IBAction func addVideoButton() {
+        cellDelegate?.didPressButton()
+    }
+    
 }
