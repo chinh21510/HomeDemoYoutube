@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
     
@@ -64,7 +64,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func requestSearchResult() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyAMSIUrMAOkM_ZUyQeZ6B9ofGHChw5eClI")
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyBHwMwk5iIlHwZWdx8mHoGIMnDZ78He0KM")
         let task = URLSession.shared.dataTask(with: url!) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -79,7 +79,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 let medium = thumbnails["medium"] as! [String: Any]
                 let url = medium["url"] as! String
                 let channelTitle = snippet["channelTitle"] as! String
-                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, description: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0)
+                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0)
                 videos.append(video)
             }
             self.searchResult = videos

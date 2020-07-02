@@ -257,18 +257,96 @@
         <!--Library-->
         <scene sceneID="7ZX-AF-04z">
             <objects>
-                <viewController id="OMZ-dn-2aU" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LibraryViewController" id="OMZ-dn-2aU" customClass="LibraryViewController" customModule="HomeYoutubeDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lzP-IY-rQu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Tb-sv-upb">
+                                <rect key="frame" x="0.0" y="44" width="414" height="119"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDX-pl-LOk">
+                                        <rect key="frame" x="25" y="25" width="120" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHO-u0-FkW">
+                                        <rect key="frame" x="343" y="81" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="createPlaylistButton:" destination="OMZ-dn-2aU" eventType="touchUpInside" id="VlJ-VF-BHC"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="VDX-pl-LOk" firstAttribute="top" secondItem="4Tb-sv-upb" secondAttribute="top" constant="25" id="AMy-3u-rgA"/>
+                                    <constraint firstItem="VDX-pl-LOk" firstAttribute="leading" secondItem="4Tb-sv-upb" secondAttribute="leading" constant="25" id="aSk-Wh-4Fp"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxT-WR-Bdl">
+                                <rect key="frame" x="42" y="325" width="330" height="207"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ClR-1a-m0x">
+                                        <rect key="frame" x="20" y="30" width="290" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9z-JL-NbW">
+                                        <rect key="frame" x="136" y="89" width="58" height="34"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Create">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createNewPlaylist:" destination="OMZ-dn-2aU" eventType="touchUpInside" id="5yh-uE-zd9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="w9z-JL-NbW" firstAttribute="centerX" secondItem="rxT-WR-Bdl" secondAttribute="centerX" id="BLb-Ns-Bjy"/>
+                                    <constraint firstAttribute="width" secondItem="rxT-WR-Bdl" secondAttribute="height" multiplier="110:69" id="Hjf-jY-Qrc"/>
+                                    <constraint firstItem="ClR-1a-m0x" firstAttribute="leading" secondItem="rxT-WR-Bdl" secondAttribute="leading" constant="20" id="WAh-Mr-kSC"/>
+                                    <constraint firstItem="ClR-1a-m0x" firstAttribute="top" secondItem="rxT-WR-Bdl" secondAttribute="top" constant="30" id="qMR-z7-4lm"/>
+                                    <constraint firstAttribute="trailing" secondItem="ClR-1a-m0x" secondAttribute="trailing" constant="20" id="rck-iG-c6f"/>
+                                    <constraint firstItem="w9z-JL-NbW" firstAttribute="top" secondItem="ClR-1a-m0x" secondAttribute="bottom" constant="25" id="tF4-n6-Sjr"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MXo-IW-0yd">
+                                <rect key="frame" x="0.0" y="163" width="414" height="650"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="pEo-aS-H2Q" firstAttribute="trailing" secondItem="MXo-IW-0yd" secondAttribute="trailing" id="5D7-XE-fdE"/>
+                            <constraint firstItem="pEo-aS-H2Q" firstAttribute="bottom" secondItem="MXo-IW-0yd" secondAttribute="bottom" id="6tp-mU-tgB"/>
+                            <constraint firstItem="rxT-WR-Bdl" firstAttribute="centerY" secondItem="pEo-aS-H2Q" secondAttribute="centerY" id="CdP-n5-JKR"/>
+                            <constraint firstItem="pEo-aS-H2Q" firstAttribute="bottom" secondItem="4Tb-sv-upb" secondAttribute="bottom" constant="650" id="HHx-MH-oAf"/>
+                            <constraint firstItem="4Tb-sv-upb" firstAttribute="top" secondItem="pEo-aS-H2Q" secondAttribute="top" id="PVJ-My-pdj"/>
+                            <constraint firstItem="rxT-WR-Bdl" firstAttribute="width" secondItem="lzP-IY-rQu" secondAttribute="width" multiplier="0.797101" id="cHQ-Rt-T3Q"/>
+                            <constraint firstItem="4Tb-sv-upb" firstAttribute="leading" secondItem="pEo-aS-H2Q" secondAttribute="leading" id="dYp-hT-UaY"/>
+                            <constraint firstItem="MXo-IW-0yd" firstAttribute="top" secondItem="4Tb-sv-upb" secondAttribute="bottom" id="gPh-Zb-XCx"/>
+                            <constraint firstItem="pEo-aS-H2Q" firstAttribute="trailing" secondItem="4Tb-sv-upb" secondAttribute="trailing" id="kq5-9s-cRX"/>
+                            <constraint firstItem="MXo-IW-0yd" firstAttribute="leading" secondItem="pEo-aS-H2Q" secondAttribute="leading" id="lgL-GK-91m"/>
+                            <constraint firstItem="rxT-WR-Bdl" firstAttribute="centerX" secondItem="pEo-aS-H2Q" secondAttribute="centerX" id="o9e-mN-2Sl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="pEo-aS-H2Q"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Library" image="library" id="PdT-tR-y5C"/>
+                    <connections>
+                        <outlet property="createPlaylist" destination="VHO-u0-FkW" id="Y5g-gP-LrP"/>
+                        <outlet property="playlistTableView" destination="MXo-IW-0yd" id="7aJ-i3-s2P"/>
+                        <outlet property="textField" destination="ClR-1a-m0x" id="BBD-BB-jxd"/>
+                        <outlet property="textView" destination="rxT-WR-Bdl" id="h3P-IG-g0L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9si-Ja-dDI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1270" y="990"/>
+            <point key="canvasLocation" x="1269.5652173913045" y="989.73214285714278"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cd2-oZ-dMb">

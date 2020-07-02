@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class DetailVideoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var videoImage: UIView!
@@ -15,13 +16,17 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     var suggestVideos = [Video]()
     var channel = ChannelVideo(title: String(), thumbnails: String(), subscriberCount: Int())
     var videos = [Video]()
-    var detailVideo = Video(title: String(), thumbnails: String(), channelTitle: String(), description: String(), channelId: String(), viewCount: Int(), duration: String(), publishedAt: String(), likeCount: Int(), dislikeCount: Int())
+    var detailVideo = Video(title: String(), thumbnails: String(), channelTitle: String(), descriptionVideo: String(), channelId: String(), viewCount: Int(), duration: String(), publishedAt: String(), likeCount: Int(), dislikeCount: Int())
+//    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         requestChannel()
         requestSuggestVideo()
+//        let video = Video()
+//        video.title = detailVideo.title
+//        print(video.title)
     }
     
     func setupUI() {
@@ -39,7 +44,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         if indexPath.row == 0 {
-            return 150
+            return 140
         } else if indexPath.row == 1 {
             return 80
         } else if indexPath.row > 2 {
@@ -108,7 +113,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     func requestChannel() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyAMSIUrMAOkM_ZUyQeZ6B9ofGHChw5eClI")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyBHwMwk5iIlHwZWdx8mHoGIMnDZ78He0KM")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -131,7 +136,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestSuggestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyAMSIUrMAOkM_ZUyQeZ6B9ofGHChw5eClI")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyBHwMwk5iIlHwZWdx8mHoGIMnDZ78He0KM")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -146,7 +151,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 let medium = thumbnails["medium"] as! [String: Any]
                 let url = medium["url"] as! String
                 let channelTitle = snippet["channelTitle"] as! String
-                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, description: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0)
+                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0)
                 videos.append(video)
             }
             self.suggestVideos = videos

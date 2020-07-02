@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		28DC8E04F576E2DF5E89E9F5 /* Pods_HomeYoutubeDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 980220B93F72B56CFEADD39D /* Pods_HomeYoutubeDemo.framework */; };
+		5F14965624AC3A3000D9E047 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14965524AC3A3000D9E047 /* LibraryViewController.swift */; };
 		5F25152424A5A270008A2D75 /* SuggestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F25152324A5A270008A2D75 /* SuggestionCell.xib */; };
 		5F25152624A5A296008A2D75 /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25152524A5A296008A2D75 /* SuggestionCell.swift */; };
 		5F3F67CF246F282C002E7818 /* TitleDetailVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3F67CE246F282C002E7818 /* TitleDetailVideoCell.xib */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F14965524AC3A3000D9E047 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		5F25152324A5A270008A2D75 /* SuggestionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionCell.xib; sourceTree = "<group>"; };
 		5F25152524A5A296008A2D75 /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; };
 		5F3F67CE246F282C002E7818 /* TitleDetailVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleDetailVideoCell.xib; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				5F6CE85324A1E5C600BBF584 /* SearchViewController.swift */,
 				5F3F67D4246F3629002E7818 /* DetailVideoViewController.swift */,
 				5F6B01AC24A2A58000E63518 /* HistoryViewController.swift */,
+				5F14965524AC3A3000D9E047 /* LibraryViewController.swift */,
 				5F6CE85524A25FF400BBF584 /* HistoryManager.swift */,
 				5F91A9B024AB0EEB00E455A2 /* Playlist.swift */,
 				5F6CE84D24A1A54E00BBF584 /* ChannelVideo.swift */,
@@ -273,6 +276,7 @@
 				5F3F67D5246F362A002E7818 /* DetailVideoViewController.swift in Sources */,
 				5F6CE84E24A1A54E00BBF584 /* ChannelVideo.swift in Sources */,
 				5F25152624A5A296008A2D75 /* SuggestionCell.swift in Sources */,
+				5F14965624AC3A3000D9E047 /* LibraryViewController.swift in Sources */,
 				5F79427F246D55A500D68723 /* ViewController.swift in Sources */,
 				5F794293246D56A200D68723 /* Video.swift in Sources */,
 				5F6B01AD24A2A58000E63518 /* HistoryViewController.swift in Sources */,

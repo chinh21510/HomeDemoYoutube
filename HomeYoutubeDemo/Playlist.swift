@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 /*
  
  Playist: videos
@@ -36,6 +37,7 @@ import Foundation
  
  */
 
-class Playlist: NSObject {
+class Playlist: Object {
     @objc dynamic var name: String = ""
+//    let favoriteVideos = List<Video>()
 }
