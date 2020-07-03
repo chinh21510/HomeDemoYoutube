@@ -127,7 +127,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func requestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyBHwMwk5iIlHwZWdx8mHoGIMnDZ78He0KM")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyCXJyeHSQMYGodZlJjcfIrCMjVQGmQlOxM")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]

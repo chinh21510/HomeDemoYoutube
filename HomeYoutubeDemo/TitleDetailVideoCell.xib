@@ -66,7 +66,7 @@
                         </constraints>
                         <state key="normal" title="Button" image="save"/>
                         <connections>
-                            <action selector="addVideoButton:" destination="inh-N0-l3l" eventType="touchUpInside" id="cFc-W0-8Zk"/>
+                            <action selector="addVideoButton" destination="inh-N0-l3l" eventType="touchUpInside" id="Mc0-k4-v5E"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Like" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRO-2c-5UW">
@@ -140,18 +140,17 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="addButton" destination="WdQ-WL-KOI" id="HeM-HH-Oir"/>
                 <outlet property="disLikeCountLabel" destination="nVH-B0-eu4" id="1Ye-YH-n4Y"/>
                 <outlet property="dislikeButton" destination="0VK-b1-fWb" id="3v4-kO-zKN"/>
                 <outlet property="downloadButton" destination="cIW-MD-mYk" id="CuG-qI-LBX"/>
                 <outlet property="durationLabel" destination="s8I-x6-xFQ" id="atk-rD-hTe"/>
                 <outlet property="likeButton" destination="xFI-nJ-f51" id="pjr-bq-Xec"/>
                 <outlet property="likeCountLabel" destination="jRO-2c-5UW" id="iP5-87-J30"/>
-                <outlet property="saveButton" destination="WdQ-WL-KOI" id="R8W-M0-8Th"/>
+                <outlet property="saveButton" destination="WdQ-WL-KOI" id="XD8-5R-uqZ"/>
                 <outlet property="shareButton" destination="1NB-GX-982" id="K7m-KU-bAq"/>
                 <outlet property="titleLabel" destination="ioZ-YF-NK3" id="NIq-vK-wHT"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="16.741071428571427"/>
+            <point key="canvasLocation" x="-225" y="42"/>
         </tableViewCell>
     </objects>
     <resources>

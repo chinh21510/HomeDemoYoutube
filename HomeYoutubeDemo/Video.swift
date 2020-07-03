@@ -20,6 +20,7 @@ class Video: Object, Codable {
     dynamic var publishedAt: String = ""
     dynamic var likeCount: Int = 0
     dynamic var dislikeCount: Int = 0
+    
     convenience init(title: String, thumbnails: String, channelTitle: String, descriptionVideo: String, channelId: String, viewCount: Int, duration: String, publishedAt: String, likeCount: Int, dislikeCount: Int) {
         self.init()
         self.title = title
@@ -33,6 +34,5 @@ class Video: Object, Codable {
         self.likeCount = likeCount
         self.dislikeCount = dislikeCount
     }
- 
 }
 

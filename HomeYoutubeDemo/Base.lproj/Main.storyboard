@@ -96,14 +96,22 @@
                                 <rect key="frame" x="0.0" y="268" width="414" height="594"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Iv1-J9-w4d">
+                                <rect key="frame" x="73.5" y="205.5" width="267" height="313.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="ERt-EU-S5K" firstAttribute="leading" secondItem="uhl-UX-ZbD" secondAttribute="leading" id="1kX-gh-muN"/>
+                            <constraint firstItem="Iv1-J9-w4d" firstAttribute="height" secondItem="7Sd-0f-v7M" secondAttribute="height" multiplier="0.35" id="Bqk-QR-PAn"/>
                             <constraint firstItem="uhl-UX-ZbD" firstAttribute="trailing" secondItem="ERt-EU-S5K" secondAttribute="trailing" id="EmQ-DJ-JCU"/>
                             <constraint firstItem="FFm-QW-hgo" firstAttribute="height" secondItem="7Sd-0f-v7M" secondAttribute="height" multiplier="0.25" id="GkF-mJ-Bk9"/>
                             <constraint firstItem="FFm-QW-hgo" firstAttribute="top" secondItem="uhl-UX-ZbD" secondAttribute="top" id="UjD-AL-3yC"/>
+                            <constraint firstItem="Iv1-J9-w4d" firstAttribute="width" secondItem="7Sd-0f-v7M" secondAttribute="width" multiplier="0.644928" id="V9u-ul-N3M"/>
+                            <constraint firstItem="Iv1-J9-w4d" firstAttribute="centerX" secondItem="uhl-UX-ZbD" secondAttribute="centerX" id="Ybp-hq-WAz"/>
                             <constraint firstItem="uhl-UX-ZbD" firstAttribute="trailing" secondItem="FFm-QW-hgo" secondAttribute="trailing" id="cB5-LA-RYg"/>
+                            <constraint firstItem="Iv1-J9-w4d" firstAttribute="centerY" secondItem="uhl-UX-ZbD" secondAttribute="centerY" multiplier="8: 10" id="dO8-xk-a9c"/>
                             <constraint firstItem="FFm-QW-hgo" firstAttribute="leading" secondItem="uhl-UX-ZbD" secondAttribute="leading" id="gL7-V1-xf2"/>
                             <constraint firstItem="ERt-EU-S5K" firstAttribute="top" secondItem="FFm-QW-hgo" secondAttribute="bottom" id="hJ7-RH-Gkb"/>
                             <constraint firstItem="uhl-UX-ZbD" firstAttribute="bottom" secondItem="ERt-EU-S5K" secondAttribute="bottom" id="xvb-gT-A0Z"/>
@@ -112,6 +120,7 @@
                     </view>
                     <connections>
                         <outlet property="detailTableView" destination="ERt-EU-S5K" id="Htf-Zg-dwy"/>
+                        <outlet property="playlistTableView" destination="Iv1-J9-w4d" id="9Cf-ZU-hBU"/>
                         <outlet property="videoImage" destination="FFm-QW-hgo" id="eDO-rn-cRj"/>
                     </connections>
                 </viewController>

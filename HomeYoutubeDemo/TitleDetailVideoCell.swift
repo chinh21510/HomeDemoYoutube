@@ -23,7 +23,6 @@ class TitleDetailVideoCell: UITableViewCell {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var disLikeCountLabel: UILabel!
-    @IBOutlet weak var addButton: UIButton!
     
     @IBAction func addVideoButton() {
         cellDelegate?.didPressButton()

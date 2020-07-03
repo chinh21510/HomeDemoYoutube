@@ -39,5 +39,5 @@ import RealmSwift
 
 class Playlist: Object {
     @objc dynamic var name: String = ""
-    let favoriteVideos = List<Video>()
+    var favoriteVideos = List<Video>()
 }
