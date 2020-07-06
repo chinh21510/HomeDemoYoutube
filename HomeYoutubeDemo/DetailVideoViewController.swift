@@ -43,6 +43,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         playlistTableView.register(UINib(nibName: "SuggestionCell", bundle: nil), forCellReuseIdentifier: "SuggestionCell")
         playlistTableView.dataSource = self
         playlistTableView.delegate = self
+        self.detailTableView.rowHeight = UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,7 +60,9 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
             return 150
         } else if indexPath.row == 1 {
             return 80
-        } else if indexPath.row > 2 {
+        } else if indexPath.row == 2 {
+            return UITableView.automaticDimension
+        } else if indexPath.row >= 3 {
             return 130
         }
         return UITableView.automaticDimension
@@ -83,7 +86,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
             } else if indexPath.row == 1 {
                 let cell = detailTableView.dequeueReusableCell(withIdentifier: "ChannelCell") as! ChannelCell
                 if let url = URL(string: channel.thumbnails), let data = try? Data(contentsOf: url) {
-                    cell.channelImageView.layer.cornerRadius = cell.frame.height / 2
+                    cell.channelImageView.layer.cornerRadius = cell.channelImageView.frame.height / 2
                     cell.channelImageView.image = UIImage(data: data)
                 }
                 cell.channelTitleLabel.text = channel.title
@@ -183,18 +186,16 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     func didPressButton() {
         playlistTableView.isHidden = false
-//        try! realm.write {
-//            realm.add(detailVideo)
-//        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == playlistTableView {
             let playlist = namesPlaylist?[indexPath.row]
-            var video = Video()
-            video = detailVideo
+            let video = Video(title: detailVideo.title, thumbnails: detailVideo.thumbnails, channelTitle: detailVideo.channelTitle, descriptionVideo: detailVideo.descriptionVideo, channelId: detailVideo.channelId, viewCount: detailVideo.viewCount, duration: detailVideo.duration, publishedAt: detailVideo.publishedAt, likeCount: detailVideo.likeCount, dislikeCount: detailVideo.dislikeCount)
+            print(detailVideo.title)
             try! realm.write {
                 playlist!.favoriteVideos.append(video)
+                print(playlist!.favoriteVideos[21].title)
             }
         }
     }

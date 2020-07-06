@@ -58,6 +58,11 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
     
     func loadPlaylist() {
         namesPlaylist = realm.objects(Playlist.self).sorted(byKeyPath: "name")
+        print(namesPlaylist!)
         playlistTableView.reloadData()
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//    }
 }
