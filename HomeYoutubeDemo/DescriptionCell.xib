@@ -8,11 +8,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="96" id="hUI-UT-Sii" customClass="DescriptionCell" customModule="HomeYoutubeDemo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="433" height="96"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="79" id="hUI-UT-Sii" customClass="DescriptionCell" customModule="HomeYoutubeDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="433" height="79"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hUI-UT-Sii" id="S9E-95-5du">
-                <rect key="frame" x="0.0" y="0.0" width="433" height="96"/>
+                <rect key="frame" x="0.0" y="0.0" width="433" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="publish at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Og-I9-qtJ">
@@ -31,6 +31,7 @@
                 <constraints>
                     <constraint firstItem="QhZ-4l-1km" firstAttribute="top" secondItem="2Og-I9-qtJ" secondAttribute="bottom" constant="10" id="5DT-Yh-GR4"/>
                     <constraint firstItem="2Og-I9-qtJ" firstAttribute="leading" secondItem="S9E-95-5du" secondAttribute="leading" constant="20" id="88j-nL-1Aa"/>
+                    <constraint firstAttribute="bottom" secondItem="QhZ-4l-1km" secondAttribute="bottom" constant="19.5" id="Gyn-iq-wJA"/>
                     <constraint firstItem="QhZ-4l-1km" firstAttribute="leading" secondItem="S9E-95-5du" secondAttribute="leading" constant="20" id="e7b-g4-928"/>
                     <constraint firstAttribute="trailing" secondItem="QhZ-4l-1km" secondAttribute="trailing" constant="20" id="lbQ-DR-wGp"/>
                     <constraint firstItem="2Og-I9-qtJ" firstAttribute="top" secondItem="S9E-95-5du" secondAttribute="top" constant="8" id="wyK-oc-Rrd"/>
@@ -40,7 +41,7 @@
                 <outlet property="descriptionLabel" destination="QhZ-4l-1km" id="emv-UX-GrD"/>
                 <outlet property="publishedAtLabel" destination="2Og-I9-qtJ" id="hCp-Ba-TYF"/>
             </connections>
-            <point key="canvasLocation" x="-273" y="5"/>
+            <point key="canvasLocation" x="-273.1884057971015" y="-1.0044642857142856"/>
         </tableViewCell>
     </objects>
 </document>

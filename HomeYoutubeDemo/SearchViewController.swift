@@ -72,7 +72,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func requestSearchResult() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyARTpkE7fWsIHXAXQfueeNFnoqPWfTuueY")
         let task = URLSession.shared.dataTask(with: url!) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]

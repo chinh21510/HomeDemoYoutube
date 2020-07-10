@@ -101,7 +101,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 return cell
             } else if indexPath.row == 2 {
                 let cell = detailTableView.dequeueReusableCell(withIdentifier: "DescriptionCell") as! DescriptionCell
-                cell.descriptionLabel.text = detailVideo.description
+                cell.descriptionLabel.text = detailVideo.descriptionVideo
                 let date = convertPublishing(publishedAt: detailVideo.publishedAt)
                 cell.publishedAtLabel.text = "Published At: \(date)"
                 return cell
@@ -140,7 +140,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestChannel() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyARTpkE7fWsIHXAXQfueeNFnoqPWfTuueY")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -163,7 +163,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestSuggestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyARTpkE7fWsIHXAXQfueeNFnoqPWfTuueY")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
