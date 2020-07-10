@@ -8,36 +8,8 @@
 
 import Foundation
 import RealmSwift
-/*
- 
- Playist: videos
- 
- Video
- 
- Playlist
- 
- Query
- 
- Core Data
- Realm
- 
- Class Video - Thoa man abc
- Luu Video
- Lay video
- 
- 
- Class Video: Object {
-    var playistId: ....
- }
- 
- playist
- 
- 
- query videos: video.playlistId = playlist.id
- 
- */
 
 class Playlist: Object {
     @objc dynamic var name: String = ""
-    var favoriteVideos = List<Video>()
+    let favoriteVideos = List<Video>()
 }

@@ -14,6 +14,7 @@
 		5F3F67CF246F282C002E7818 /* TitleDetailVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F3F67CE246F282C002E7818 /* TitleDetailVideoCell.xib */; };
 		5F3F67D3246F3042002E7818 /* TitleDetailVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3F67D2246F3042002E7818 /* TitleDetailVideoCell.swift */; };
 		5F3F67D5246F362A002E7818 /* DetailVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3F67D4246F3629002E7818 /* DetailVideoViewController.swift */; };
+		5F44608624B706830047F3A7 /* YoutubeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44608524B706830047F3A7 /* YoutubeParser.swift */; };
 		5F560B59247127AC00179A3C /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F560B58247127AC00179A3C /* ChannelCell.swift */; };
 		5F560B5B247127BC00179A3C /* ChannelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F560B5A247127BC00179A3C /* ChannelCell.xib */; };
 		5F560B5F247137EB00179A3C /* DescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F560B5E247137EB00179A3C /* DescriptionCell.xib */; };
@@ -34,6 +35,7 @@
 		5F794293246D56A200D68723 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F794292246D56A200D68723 /* Video.swift */; };
 		5F794295246D56B900D68723 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F794294246D56B900D68723 /* VideoCell.swift */; };
 		5F91A9B124AB0EEB00E455A2 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F91A9B024AB0EEB00E455A2 /* Playlist.swift */; };
+		5F99B30624B46CF6004F8AC1 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F99B30524B46CF6004F8AC1 /* PlaylistViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,7 @@
 		5F3F67CE246F282C002E7818 /* TitleDetailVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleDetailVideoCell.xib; sourceTree = "<group>"; };
 		5F3F67D2246F3042002E7818 /* TitleDetailVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleDetailVideoCell.swift; sourceTree = "<group>"; };
 		5F3F67D4246F3629002E7818 /* DetailVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVideoViewController.swift; sourceTree = "<group>"; };
+		5F44608524B706830047F3A7 /* YoutubeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeParser.swift; sourceTree = "<group>"; };
 		5F560B58247127AC00179A3C /* ChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
 		5F560B5A247127BC00179A3C /* ChannelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChannelCell.xib; sourceTree = "<group>"; };
 		5F560B5E247137EB00179A3C /* DescriptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionCell.xib; sourceTree = "<group>"; };
@@ -65,6 +68,7 @@
 		5F794292246D56A200D68723 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		5F794294246D56B900D68723 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		5F91A9B024AB0EEB00E455A2 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		5F99B30524B46CF6004F8AC1 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		6AAC6FCD9BA0DFB57EAB3E32 /* Pods-HomeYoutubeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeYoutubeDemo.debug.xcconfig"; path = "Target Support Files/Pods-HomeYoutubeDemo/Pods-HomeYoutubeDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		980220B93F72B56CFEADD39D /* Pods_HomeYoutubeDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HomeYoutubeDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC3230501DF23B36D11D039 /* Pods-HomeYoutubeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeYoutubeDemo.release.xcconfig"; path = "Target Support Files/Pods-HomeYoutubeDemo/Pods-HomeYoutubeDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -106,30 +110,32 @@
 				5F79427A246D55A500D68723 /* AppDelegate.swift */,
 				5F79427C246D55A500D68723 /* SceneDelegate.swift */,
 				5F79427E246D55A500D68723 /* ViewController.swift */,
-				5F6CE85324A1E5C600BBF584 /* SearchViewController.swift */,
 				5F3F67D4246F3629002E7818 /* DetailVideoViewController.swift */,
+				5F6CE85324A1E5C600BBF584 /* SearchViewController.swift */,
 				5F6B01AC24A2A58000E63518 /* HistoryViewController.swift */,
 				5F14965524AC3A3000D9E047 /* LibraryViewController.swift */,
+				5F99B30524B46CF6004F8AC1 /* PlaylistViewController.swift */,
 				5F6CE85524A25FF400BBF584 /* HistoryManager.swift */,
-				5F91A9B024AB0EEB00E455A2 /* Playlist.swift */,
-				5F6CE84D24A1A54E00BBF584 /* ChannelVideo.swift */,
 				5F794292246D56A200D68723 /* Video.swift */,
+				5F91A9B024AB0EEB00E455A2 /* Playlist.swift */,
 				5F794294246D56B900D68723 /* VideoCell.swift */,
 				5F794290246D560600D68723 /* VideoCell.xib */,
 				5F3F67D2246F3042002E7818 /* TitleDetailVideoCell.swift */,
 				5F3F67CE246F282C002E7818 /* TitleDetailVideoCell.xib */,
+				5F6CE84D24A1A54E00BBF584 /* ChannelVideo.swift */,
 				5F560B58247127AC00179A3C /* ChannelCell.swift */,
 				5F560B5A247127BC00179A3C /* ChannelCell.xib */,
+				5F560B6024713D0000179A3C /* DescriptionCell.swift */,
+				5F560B5E247137EB00179A3C /* DescriptionCell.xib */,
 				5F6CE85124A1B53400BBF584 /* SuggestVideoCell.swift */,
 				5F6CE84F24A1ABA300BBF584 /* SuggestVideoCell.xib */,
 				5F25152524A5A296008A2D75 /* SuggestionCell.swift */,
 				5F25152324A5A270008A2D75 /* SuggestionCell.xib */,
-				5F560B6024713D0000179A3C /* DescriptionCell.swift */,
-				5F560B5E247137EB00179A3C /* DescriptionCell.xib */,
 				5F794280246D55A500D68723 /* Main.storyboard */,
 				5F794283246D55A700D68723 /* Assets.xcassets */,
 				5F794285246D55A700D68723 /* LaunchScreen.storyboard */,
 				5F794288246D55A700D68723 /* Info.plist */,
+				5F44608524B706830047F3A7 /* YoutubeParser.swift */,
 			);
 			path = HomeYoutubeDemo;
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 				5F6CE84E24A1A54E00BBF584 /* ChannelVideo.swift in Sources */,
 				5F25152624A5A296008A2D75 /* SuggestionCell.swift in Sources */,
 				5F14965624AC3A3000D9E047 /* LibraryViewController.swift in Sources */,
+				5F44608624B706830047F3A7 /* YoutubeParser.swift in Sources */,
 				5F79427F246D55A500D68723 /* ViewController.swift in Sources */,
 				5F794293246D56A200D68723 /* Video.swift in Sources */,
 				5F6B01AD24A2A58000E63518 /* HistoryViewController.swift in Sources */,
@@ -286,6 +293,7 @@
 				5F3F67D3246F3042002E7818 /* TitleDetailVideoCell.swift in Sources */,
 				5F91A9B124AB0EEB00E455A2 /* Playlist.swift in Sources */,
 				5F560B59247127AC00179A3C /* ChannelCell.swift in Sources */,
+				5F99B30624B46CF6004F8AC1 /* PlaylistViewController.swift in Sources */,
 				5F6CE85224A1B53400BBF584 /* SuggestVideoCell.swift in Sources */,
 				5F79427B246D55A500D68723 /* AppDelegate.swift in Sources */,
 				5F79427D246D55A500D68723 /* SceneDelegate.swift in Sources */,

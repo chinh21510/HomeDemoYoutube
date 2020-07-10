@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioZ-YF-NK3">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioZ-YF-NK3">
                         <rect key="frame" x="20" y="8" width="354" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -34,6 +34,9 @@
                             <constraint firstAttribute="width" secondItem="xFI-nJ-f51" secondAttribute="height" multiplier="1:1" id="yLc-Lz-RbP"/>
                         </constraints>
                         <state key="normal" title="Button" image="like"/>
+                        <connections>
+                            <action selector="clickLikeButton" destination="inh-N0-l3l" eventType="touchUpInside" id="G46-S4-yCW"/>
+                        </connections>
                     </button>
                     <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0VK-b1-fWb">
                         <rect key="frame" x="111" y="68" width="30" height="30"/>

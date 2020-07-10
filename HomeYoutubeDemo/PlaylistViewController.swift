@@ -1,41 +1,38 @@
 //
-//  HistoryViewController.swift
+//  PlaylistViewController.swift
 //  HomeYoutubeDemo
 //
-//  Created by Chinh Dinh on 6/24/20.
+//  Created by Chinh Dinh on 7/7/20.
 //  Copyright © 2020 Chinh Dinh. All rights reserved.
 //
 
 import UIKit
 
-class HistoryViewController: UIViewController, UITableViewDataSource {
-    @IBOutlet weak var historyTableView: UITableView!
-    var historyVideos = [Video]()
+class PlaylistViewController: UIViewController, UITableViewDataSource {
+    @IBOutlet weak var namePlaylistView: UIView!
+    @IBOutlet weak var playlistLabel: UILabel!
+    @IBOutlet weak var playlistTableView: UITableView!
+    var videos = [Video]()
+    var namePlaylist = String()
     var viewController = ViewController()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        historyVideos = HistoryManager.loadedVideo()
-        historyTableView.reloadData()
-    }
-    
     func setupUI() {
-        historyTableView.dataSource = self
-        historyTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
-        historyTableView.rowHeight = 130
+        playlistTableView.dataSource = self
+        playlistTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
+        playlistTableView.rowHeight = 130
+        playlistLabel.text = namePlaylist
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return historyVideos.count
+        return videos.count
     }
-       
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = historyTableView.dequeueReusableCell(withIdentifier: "SuggestVideoCell") as! SuggestVideoCell
-        let video = historyVideos[indexPath.row]
+        let cell = playlistTableView.dequeueReusableCell(withIdentifier: "SuggestVideoCell") as! SuggestVideoCell
+        let video = videos[indexPath.row]
         let url = URL(string: video.thumbnails)
         let data = try? Data(contentsOf: url!)
         cell.thumbnailsImage.image = UIImage(data: data!)
@@ -47,5 +44,4 @@ class HistoryViewController: UIViewController, UITableViewDataSource {
         cell.publishedAtLabel.text = "\(viewCount) views \u{2022} \(publishedAt)"
         return cell
     }
-
 }

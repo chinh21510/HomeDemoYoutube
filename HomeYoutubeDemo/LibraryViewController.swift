@@ -9,15 +9,15 @@
 import UIKit
 import RealmSwift
 
-class LibraryViewController: UIViewController, UITableViewDataSource {
+class LibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
    
     @IBOutlet weak var createPlaylist: UIButton!
     @IBOutlet weak var playlistTableView: UITableView!
     @IBOutlet weak var textView: UIView!
     @IBOutlet weak var textField: UITextField!
-    
-    let realm = try! Realm()
-    var namesPlaylist: Results<Playlist>?
+    let realm = try? Realm()
+    var namesPlaylist: Results<Playlist>!
+    var playlistVideo: Results<Video>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,12 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
         loadPlaylist()
         playlistTableView.dataSource = self
         playlistTableView.register(UINib(nibName: "SuggestionCell", bundle: nil), forCellReuseIdentifier: "SuggestionCell")
+        playlistTableView.delegate = self
+        setupUI()
+    }
+    
+    func setupUI() {
+        textView.layer.cornerRadius = 10
     }
     
     @IBAction func createPlaylistButton(_ sender: Any) {
@@ -33,13 +39,17 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
         playlistTableView.isHidden = true
     }
     
+    @IBAction func cancelCreatePlaylistButton(_ sender: Any) {
+        textView.isHidden = true
+        playlistTableView.isHidden = false
+    }
+    
     @IBAction func createNewPlaylist(_ sender: Any) {
         let newPlaylist = Playlist()
         newPlaylist.name = textField.text!
-        try! realm.write {
-            realm.add(newPlaylist)
+        try! realm!.write {
+            realm!.add(newPlaylist)
         }
-        
         textView.isHidden = true
         playlistTableView.isHidden = false
         playlistTableView.reloadData()
@@ -51,18 +61,25 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = playlistTableView.dequeueReusableCell(withIdentifier: "SuggestionCell") as! SuggestionCell
-        
         cell.suggestionLabel.text = namesPlaylist?[indexPath.row].name ?? ""
         return cell
     }
     
     func loadPlaylist() {
-        namesPlaylist = realm.objects(Playlist.self).sorted(byKeyPath: "name")
-        print(namesPlaylist!)
+        namesPlaylist = realm!.objects(Playlist.self).sorted(byKeyPath: "name")
         playlistTableView.reloadData()
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let playlist: PlaylistViewController = storyboard?.instantiateViewController(withIdentifier: "PlaylistViewController") as! PlaylistViewController
+        playlist.namePlaylist = namesPlaylist[indexPath.row].name
+        for video in namesPlaylist[indexPath.row].favoriteVideos {
+            playlist.videos.insert(video, at: 0)
+        }
+        self.navigationController?.pushViewController(playlist, animated: true)
+    }
+    
+    
+    
+    
 }

@@ -7,30 +7,31 @@
 //
 
 import UIKit
+import Realm
 import RealmSwift
-
+import AVFoundation
 class DetailVideoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, YourCellDelegate {
     
-    
-    @IBOutlet weak var videoImage: UIView!
+    @IBOutlet weak var playlistView: UIView!
     @IBOutlet weak var detailTableView: UITableView!
     @IBOutlet weak var playlistTableView: UITableView!
-    
+    @IBOutlet weak var videoView: UIView!
     
     var viewController = ViewController()
     var suggestVideos = [Video]()
     var channel = ChannelVideo(title: String(), thumbnails: String(), subscriberCount: Int())
     var videos = [Video]()
-    var detailVideo = Video(title: String(), thumbnails: String(), channelTitle: String(), descriptionVideo: String(), channelId: String(), viewCount: Int(), duration: String(), publishedAt: String(), likeCount: Int(), dislikeCount: Int())
-    let realm = try! Realm()
-    var namesPlaylist: Results<Playlist>?
+    var detailVideo = Video(title: String(), thumbnails: String(), channelTitle: String(), descriptionVideo: String(), channelId: String(), viewCount: Int(), duration: String(), publishedAt: String(), likeCount: Int(), dislikeCount: Int(), id: String())
+    let realm = try? Realm()
+    var namesPlaylist: Results<Playlist>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         requestChannel()
         requestSuggestVideo()
-        namesPlaylist = realm.objects(Playlist.self).sorted(byKeyPath: "name")
+        namesPlaylist = realm!.objects(Playlist.self).sorted(byKeyPath: "name")
+        playVideo()
     }
     
     func setupUI() {
@@ -44,6 +45,8 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         playlistTableView.dataSource = self
         playlistTableView.delegate = self
         self.detailTableView.rowHeight = UITableView.automaticDimension
+        playlistView.layer.cornerRadius = 10
+        playlistTableView.layer.cornerRadius = 10
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,16 +59,20 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        if indexPath.row == 0 {
-            return 150
-        } else if indexPath.row == 1 {
-            return 80
-        } else if indexPath.row == 2 {
+        if tableView == detailTableView {
+            if indexPath.row == 0 {
+                return 150
+            } else if indexPath.row == 1 {
+                return 80
+            } else if indexPath.row == 2 {
+                return UITableView.automaticDimension
+            } else if indexPath.row >= 3 {
+                return 130
+            }
             return UITableView.automaticDimension
-        } else if indexPath.row >= 3 {
-            return 130
+        } else {
+            return UITableView.automaticDimension
         }
-        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,7 +103,6 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 let cell = detailTableView.dequeueReusableCell(withIdentifier: "DescriptionCell") as! DescriptionCell
                 cell.descriptionLabel.text = detailVideo.description
                 let date = convertPublishing(publishedAt: detailVideo.publishedAt)
-    //          let publishedAt = viewController.getElapsedInterval(date: date)
                 cell.publishedAtLabel.text = "Published At: \(date)"
                 return cell
             } else {
@@ -120,7 +126,6 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         return UITableViewCell()
     }
         
-    
     func convertPublishing(publishedAt: String) -> String{
         let string = publishedAt
        let dateFormatter = DateFormatter()
@@ -134,9 +139,8 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         return dateString
     }
     
-    
     func requestChannel() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyCXJyeHSQMYGodZlJjcfIrCMjVQGmQlOxM")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -159,12 +163,14 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestSuggestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyCXJyeHSQMYGodZlJjcfIrCMjVQGmQlOxM")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
             var videos = [Video]()
             for item in items {
+                let id = item["id"] as! [String: Any]
+                let videoId = id["videoId"] as! String
                 let snippet = item["snippet"] as! [String: Any]
                 let channelId = snippet["channelId"] as! String
                 let publishedAt = snippet["publishedAt"] as! String
@@ -174,7 +180,8 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 let medium = thumbnails["medium"] as! [String: Any]
                 let url = medium["url"] as! String
                 let channelTitle = snippet["channelTitle"] as! String
-                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0)
+                
+                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0, id: videoId)
                 videos.append(video)
             }
             self.suggestVideos = videos
@@ -184,19 +191,48 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         }
         task.resume()
     }
+    
     func didPressButton() {
-        playlistTableView.isHidden = false
+        playlistView.isHidden = false
+        videoView.alpha = 0.3
+        detailTableView.alpha = 0.3
+    }
+    
+    func clickLikeButton() {
+        for playlist in namesPlaylist {
+            if playlist.name == "Loda" {
+                try? realm!.write {
+                    playlist.favoriteVideos.append(detailVideo)
+                }
+            }
+        }
+    }
+    
+    @IBAction func turnOffPlaylistTableView(_ sender: Any) {
+        playlistView.isHidden = true
+        videoView.alpha = 1
+        detailTableView.alpha = 1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == playlistTableView {
-            let playlist = namesPlaylist?[indexPath.row]
-            let video = Video(title: detailVideo.title, thumbnails: detailVideo.thumbnails, channelTitle: detailVideo.channelTitle, descriptionVideo: detailVideo.descriptionVideo, channelId: detailVideo.channelId, viewCount: detailVideo.viewCount, duration: detailVideo.duration, publishedAt: detailVideo.publishedAt, likeCount: detailVideo.likeCount, dislikeCount: detailVideo.dislikeCount)
-            print(detailVideo.title)
-            try! realm.write {
-                playlist!.favoriteVideos.append(video)
-                print(playlist!.favoriteVideos[21].title)
+            let playlist = namesPlaylist[indexPath.row]
+            try? realm!.write {
+                playlist.favoriteVideos.append(detailVideo)
             }
+            playlistView.isHidden = true
+            print(playlist.favoriteVideos)
+        }
+    }
+    
+    func playVideo() {
+        YoutubeUrlReciver.h264videosWithYoutubeURL(id: "Kma3NpC3JKQ") { data, error in
+            let videoURL = URL(string: data[5])!
+            let player = AVPlayer(url: videoURL)
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = self.videoView.bounds
+            self.videoView.layer.addSublayer(playerLayer)
+            player.play()
         }
     }
 }

@@ -10,18 +10,19 @@ import Foundation
 import RealmSwift
 
 class Video: Object, Codable {
-    dynamic var title: String = ""
-    dynamic var thumbnails: String = ""
-    dynamic var channelTitle: String = ""
-    dynamic var descriptionVideo: String = ""
-    dynamic var channelId: String = ""
-    dynamic var viewCount: Int = 0
-    dynamic var duration: String = ""
-    dynamic var publishedAt: String = ""
-    dynamic var likeCount: Int = 0
-    dynamic var dislikeCount: Int = 0
+    @objc dynamic var title: String = ""
+    @objc dynamic var thumbnails: String = ""
+    @objc dynamic var channelTitle: String = ""
+    @objc dynamic var descriptionVideo: String = ""
+    @objc dynamic var channelId: String = ""
+    @objc dynamic var viewCount: Int = 0
+    @objc dynamic var duration: String = ""
+    @objc dynamic var publishedAt: String = ""
+    @objc dynamic var likeCount: Int = 0
+    @objc dynamic var dislikeCount: Int = 0
+    @objc dynamic var id: String = ""
     
-    convenience init(title: String, thumbnails: String, channelTitle: String, descriptionVideo: String, channelId: String, viewCount: Int, duration: String, publishedAt: String, likeCount: Int, dislikeCount: Int) {
+    convenience init(title: String, thumbnails: String, channelTitle: String, descriptionVideo: String, channelId: String, viewCount: Int, duration: String, publishedAt: String, likeCount: Int, dislikeCount: Int, id: String) {
         self.init()
         self.title = title
         self.thumbnails = thumbnails
@@ -33,6 +34,7 @@ class Video: Object, Codable {
         self.publishedAt = publishedAt
         self.likeCount = likeCount
         self.dislikeCount = dislikeCount
+        self.id = id
     }
 }
 

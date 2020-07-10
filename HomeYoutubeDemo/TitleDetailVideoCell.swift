@@ -10,6 +10,7 @@ import UIKit
 
 protocol YourCellDelegate: class {
     func didPressButton()
+    func clickLikeButton()
 }
 
 class TitleDetailVideoCell: UITableViewCell {
@@ -26,6 +27,10 @@ class TitleDetailVideoCell: UITableViewCell {
     
     @IBAction func addVideoButton() {
         cellDelegate?.didPressButton()
+    }
+    
+    @IBAction func clickLikeButton() {
+        cellDelegate?.clickLikeButton()
     }
     
 }

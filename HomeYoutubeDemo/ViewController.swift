@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Realm
 import RealmSwift
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -127,7 +128,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func requestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyCXJyeHSQMYGodZlJjcfIrCMjVQGmQlOxM")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -148,8 +149,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let channelTitle = snippet["channelTitle"] as! String
                 let contentDetails = item["contentDetails"] as! [String: Any]
                 let duration = contentDetails["duration"] as! String
-                    
-                let video = Video(title: title, thumbnails: thumbnailsUrl, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: viewCount, duration: duration, publishedAt: publishedAt, likeCount: likeCount, dislikeCount: dislikeCount)
+                let id = item["id"] as! String
+                let video = Video(title: title, thumbnails: thumbnailsUrl, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: viewCount, duration: duration, publishedAt: publishedAt, likeCount: likeCount, dislikeCount: dislikeCount, id: id)
                     videos.append(video)
             }
             self.videos = videos

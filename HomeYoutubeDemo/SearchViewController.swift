@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 import RealmSwift
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
@@ -21,6 +22,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     var historyVideo = [Video]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    func setupUI() {
         searchBar.delegate = self
         suggestionTableView.register(UINib(nibName: "SuggestionCell", bundle: nil), forCellReuseIdentifier: "SuggestionCell")
         suggestionTableView.dataSource = self
@@ -30,6 +35,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         resultVideoTableView.delegate = self
         resultVideoTableView.isHidden = true
         resultVideoTableView.rowHeight = 130
+        suggestionTableView.separatorStyle = .none
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -40,6 +46,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             suggestionTableView.isHidden = false
             resultVideoTableView.isHidden = true
         }
+        suggestionTableView.separatorStyle = .singleLine
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -47,6 +54,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         requestSearchResult()
         suggestionTableView.isHidden = true
         resultVideoTableView.isHidden = false
+        
     }
     
     func requestSuggestion() {
@@ -64,12 +72,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func requestSearchResult() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyCXJyeHSQMYGodZlJjcfIrCMjVQGmQlOxM")
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyAIK9Vo9KNPUHnRyFq-2QeNv2dt6nG-Pkw")
         let task = URLSession.shared.dataTask(with: url!) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
             var videos = [Video]()
             for item in items {
+                var videoId = ""
                 let snippet = item["snippet"] as! [String: Any]
                 let channelId = snippet["channelId"] as! String
                 let publishedAt = snippet["publishedAt"] as! String
@@ -79,7 +88,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 let medium = thumbnails["medium"] as! [String: Any]
                 let url = medium["url"] as! String
                 let channelTitle = snippet["channelTitle"] as! String
-                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0)
+                let id = item["id"] as! [String: Any]
+                let kind = id["kind"] as! String
+                if kind == "youtube#channel" {
+                    videoId = ""
+                } else {
+                    videoId = id["videoId"] as! String
+                }
+                
+                let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0, id: videoId)
                 videos.append(video)
             }
             self.searchResult = videos
@@ -135,7 +152,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             let detailVideo: DetailVideoViewController = storyboard?.instantiateViewController(withIdentifier: "DetailVideoViewController") as! DetailVideoViewController
             detailVideo.detailVideo = video
             detailVideo.requestChannel()
-            
             self.navigationController?.pushViewController(detailVideo, animated: true)
             HistoryManager.savedVideo(video: video)
         }
