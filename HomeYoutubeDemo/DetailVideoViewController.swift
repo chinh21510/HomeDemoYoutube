@@ -19,9 +19,10 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tapPlayerViewButton: UIButton!
     @IBOutlet weak var remoteVideoView: UIView!
     @IBOutlet weak var playVideoButton: UIButton!
+    @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var forwardVideoButton: UIButton!
     @IBOutlet weak var backwardVideoButton: UIButton!
-    
+    var timer = Timer()
     var player: AVPlayer?
     var viewController = ViewController()
     var suggestVideos = [Video]()
@@ -233,38 +234,44 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 playlist.favoriteVideos.append(detailVideo)
             }
             playlistView.isHidden = true
-            print(playlist.favoriteVideos)
         }
     }
     
     func playVideo() {
         YoutubeUrlReciver.h264videosWithYoutubeURL(id: "Kma3NpC3JKQ") { data, error in
             let videoURL = URL(string: data[5])!
-            let player = AVPlayer(url: videoURL)
-            let playerLayer = AVPlayerLayer(player: player)
+            self.player = AVPlayer(url: videoURL)
+            let playerLayer = AVPlayerLayer(player: self.player)
             playerLayer.frame = self.videoView.bounds
             self.videoView.layer.addSublayer(playerLayer)
-            player.play()
+            self.player!.play()
         }
     }
     
+    @objc func displayTap() {
+        remoteVideoView.isHidden = true
+    }
+    
     @IBAction func tapPlayerView(_ sender: Any) {
-//        remoteVideoView.alpha = 1
-//        remoteVideoView.isHidden = false
-//        UIView.animate(withDuration: 5, animations: { () -> Void in
-//            self.remoteVideoView.alpha = 0
-//        })
-         UIView.transition(with: remoteVideoView, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            self.remoteVideoView.isHidden = false
-           })
+        remoteVideoView.isHidden = false
+        timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(displayTap), userInfo: nil, repeats: false)
+    }
+   
+    
+    @IBAction func tapPlayButton(_ sender: Any) {
+        player!.pause()
+        playVideoButton.isHidden = true
+        pauseButton.isHidden = false
     }
    
 
-    @IBAction func tapPlayButton(_ sender: Any) {
-//        player!.pause()
-        print(1)
+    @IBAction func tapPauseButton(_ sender: Any) {
+        player!.play()
+        playVideoButton.isHidden = false
+        pauseButton.isHidden = true
     }
-
+    
+    
     @IBAction func tapForwardButton(_ sender: Any) {
     }
 

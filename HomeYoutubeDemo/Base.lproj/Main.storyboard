@@ -135,14 +135,25 @@
                                             <action selector="tapPlayButton:" destination="IdR-Qz-lki" eventType="touchUpInside" id="9vD-9H-UrR"/>
                                         </connections>
                                     </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiS-dw-pTW">
+                                        <rect key="frame" x="191" y="111" width="24" height="24"/>
+                                        <state key="normal" image="pause24"/>
+                                        <connections>
+                                            <action selector="tapPauseButton:" destination="IdR-Qz-lki" eventType="touchUpInside" id="xNY-lQ-qAl"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="jtz-iW-1Ab" firstAttribute="centerY" secondItem="hMC-UN-9U3" secondAttribute="centerY" constant="-3.75" id="0JV-r5-mMI"/>
+                                    <constraint firstItem="KiS-dw-pTW" firstAttribute="bottom" secondItem="TdA-IH-4cv" secondAttribute="bottom" id="Dw9-d0-5Zh"/>
                                     <constraint firstItem="TdA-IH-4cv" firstAttribute="leading" secondItem="jtz-iW-1Ab" secondAttribute="trailing" constant="68" id="Rv1-61-K6h"/>
+                                    <constraint firstItem="KiS-dw-pTW" firstAttribute="leading" secondItem="TdA-IH-4cv" secondAttribute="leading" id="UuK-Oe-FS8"/>
+                                    <constraint firstItem="KiS-dw-pTW" firstAttribute="top" secondItem="TdA-IH-4cv" secondAttribute="top" id="YQg-3E-Nke"/>
                                     <constraint firstItem="srf-9C-DKb" firstAttribute="centerY" secondItem="hMC-UN-9U3" secondAttribute="centerY" constant="-3.75" id="fm0-at-U88"/>
                                     <constraint firstItem="srf-9C-DKb" firstAttribute="leading" secondItem="TdA-IH-4cv" secondAttribute="trailing" constant="68" id="jYh-uF-b4G"/>
                                     <constraint firstItem="TdA-IH-4cv" firstAttribute="centerX" secondItem="hMC-UN-9U3" secondAttribute="centerX" constant="-4" id="jk8-2v-Uew"/>
                                     <constraint firstItem="TdA-IH-4cv" firstAttribute="centerY" secondItem="hMC-UN-9U3" secondAttribute="centerY" constant="-3.75" id="s2P-iQ-sQF"/>
+                                    <constraint firstItem="KiS-dw-pTW" firstAttribute="trailing" secondItem="TdA-IH-4cv" secondAttribute="trailing" id="xsU-1y-Lko"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-R7-S2y">
@@ -214,6 +225,7 @@
                         <outlet property="backwardVideoButton" destination="jtz-iW-1Ab" id="MPq-Ik-e5w"/>
                         <outlet property="detailTableView" destination="ERt-EU-S5K" id="Htf-Zg-dwy"/>
                         <outlet property="forwardVideoButton" destination="srf-9C-DKb" id="f1c-uB-WiA"/>
+                        <outlet property="pauseButton" destination="KiS-dw-pTW" id="pEf-BT-PhV"/>
                         <outlet property="playVideoButton" destination="TdA-IH-4cv" id="ffY-ph-MS5"/>
                         <outlet property="playlistTableView" destination="Rf9-3X-djU" id="RYJ-6G-4Bl"/>
                         <outlet property="playlistView" destination="gCw-R7-S2y" id="FVE-iX-WDL"/>
@@ -617,6 +629,7 @@
         <image name="home" width="24" height="24"/>
         <image name="library" width="24" height="24"/>
         <image name="mail box" width="24" height="24"/>
+        <image name="pause24" width="24" height="24"/>
         <image name="play24" width="24" height="24"/>
         <image name="plus" width="30" height="30"/>
         <image name="search" width="50" height="50"/>
