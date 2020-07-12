@@ -96,6 +96,55 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="253.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VsU-iw-Qd4">
+                                <rect key="frame" x="0.0" y="44" width="414" height="253.5"/>
+                                <connections>
+                                    <action selector="tapPlayerView:" destination="IdR-Qz-lki" eventType="touchUpInside" id="c7H-nU-QPu"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hMC-UN-9U3">
+                                <rect key="frame" x="0.0" y="44" width="414" height="253.5"/>
+                                <subviews>
+                                    <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srf-9C-DKb">
+                                        <rect key="frame" x="291" y="103" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="srf-9C-DKb" secondAttribute="height" multiplier="1:1" id="MZd-ey-2C3"/>
+                                        </constraints>
+                                        <state key="normal" image="forward24"/>
+                                        <connections>
+                                            <action selector="tapForwardButton:" destination="IdR-Qz-lki" eventType="touchUpInside" id="do2-pU-Hm1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtz-iW-1Ab">
+                                        <rect key="frame" x="75" y="103" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="jtz-iW-1Ab" secondAttribute="height" multiplier="1:1" id="kAF-p3-2lx"/>
+                                        </constraints>
+                                        <state key="normal" image="backward24"/>
+                                        <connections>
+                                            <action selector="tapBackwardButton:" destination="IdR-Qz-lki" eventType="touchUpInside" id="bJJ-IB-XJ5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TdA-IH-4cv">
+                                        <rect key="frame" x="183" y="103" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="TdA-IH-4cv" secondAttribute="height" multiplier="1:1" id="adM-LN-sVT"/>
+                                        </constraints>
+                                        <state key="normal" image="play24"/>
+                                        <connections>
+                                            <action selector="tapPlayButton:" destination="IdR-Qz-lki" eventType="touchUpInside" id="9vD-9H-UrR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jtz-iW-1Ab" firstAttribute="centerY" secondItem="hMC-UN-9U3" secondAttribute="centerY" constant="-3.75" id="0JV-r5-mMI"/>
+                                    <constraint firstItem="TdA-IH-4cv" firstAttribute="leading" secondItem="jtz-iW-1Ab" secondAttribute="trailing" constant="68" id="Rv1-61-K6h"/>
+                                    <constraint firstItem="srf-9C-DKb" firstAttribute="centerY" secondItem="hMC-UN-9U3" secondAttribute="centerY" constant="-3.75" id="fm0-at-U88"/>
+                                    <constraint firstItem="srf-9C-DKb" firstAttribute="leading" secondItem="TdA-IH-4cv" secondAttribute="trailing" constant="68" id="jYh-uF-b4G"/>
+                                    <constraint firstItem="TdA-IH-4cv" firstAttribute="centerX" secondItem="hMC-UN-9U3" secondAttribute="centerX" constant="-4" id="jk8-2v-Uew"/>
+                                    <constraint firstItem="TdA-IH-4cv" firstAttribute="centerY" secondItem="hMC-UN-9U3" secondAttribute="centerY" constant="-3.75" id="s2P-iQ-sQF"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-R7-S2y">
                                 <rect key="frame" x="0.0" y="593" width="414" height="269"/>
                                 <subviews>
@@ -114,7 +163,7 @@
                                         <color key="sectionIndexBackgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WNK-AU-77v">
-                                        <rect key="frame" x="364" y="16" width="20" height="22"/>
+                                        <rect key="frame" x="256" y="-83" width="128" height="121"/>
                                         <state key="normal" image="xmark.circle"/>
                                         <connections>
                                             <action selector="turnOffPlaylistTableView:" destination="IdR-Qz-lki" eventType="touchUpInside" id="GXy-DO-f9c"/>
@@ -140,11 +189,19 @@
                         <constraints>
                             <constraint firstItem="ERt-EU-S5K" firstAttribute="leading" secondItem="uhl-UX-ZbD" secondAttribute="leading" id="1kX-gh-muN"/>
                             <constraint firstItem="uhl-UX-ZbD" firstAttribute="bottom" secondItem="gCw-R7-S2y" secondAttribute="bottom" id="4h8-nk-mP6"/>
+                            <constraint firstItem="VsU-iw-Qd4" firstAttribute="height" secondItem="0tA-Da-xBX" secondAttribute="height" id="Ayy-wq-tSb"/>
                             <constraint firstItem="ERt-EU-S5K" firstAttribute="top" secondItem="0tA-Da-xBX" secondAttribute="bottom" id="Bs1-CZ-Idi"/>
                             <constraint firstItem="gCw-R7-S2y" firstAttribute="height" secondItem="7Sd-0f-v7M" secondAttribute="height" multiplier="0.3" id="D3F-Uh-e4q"/>
                             <constraint firstItem="uhl-UX-ZbD" firstAttribute="trailing" secondItem="ERt-EU-S5K" secondAttribute="trailing" id="EmQ-DJ-JCU"/>
+                            <constraint firstItem="ERt-EU-S5K" firstAttribute="top" secondItem="hMC-UN-9U3" secondAttribute="bottom" id="F0X-Kk-5az"/>
+                            <constraint firstItem="hMC-UN-9U3" firstAttribute="leading" secondItem="uhl-UX-ZbD" secondAttribute="leading" id="NSU-DV-CCb"/>
+                            <constraint firstItem="hMC-UN-9U3" firstAttribute="top" secondItem="uhl-UX-ZbD" secondAttribute="top" id="XJe-BA-WvT"/>
+                            <constraint firstItem="VsU-iw-Qd4" firstAttribute="top" secondItem="uhl-UX-ZbD" secondAttribute="top" id="ZgY-Rl-chA"/>
                             <constraint firstItem="uhl-UX-ZbD" firstAttribute="trailing" secondItem="gCw-R7-S2y" secondAttribute="trailing" id="aFr-6V-QVO"/>
                             <constraint firstItem="ERt-EU-S5K" firstAttribute="height" secondItem="7Sd-0f-v7M" secondAttribute="height" multiplier="0.63" id="cFH-Po-Az3"/>
+                            <constraint firstItem="VsU-iw-Qd4" firstAttribute="trailing" secondItem="uhl-UX-ZbD" secondAttribute="trailing" id="kL8-mN-J9A"/>
+                            <constraint firstItem="uhl-UX-ZbD" firstAttribute="trailing" secondItem="hMC-UN-9U3" secondAttribute="trailing" id="mLu-0N-YLn"/>
+                            <constraint firstItem="VsU-iw-Qd4" firstAttribute="leading" secondItem="uhl-UX-ZbD" secondAttribute="leading" id="oYx-V7-iWi"/>
                             <constraint firstItem="gCw-R7-S2y" firstAttribute="leading" secondItem="uhl-UX-ZbD" secondAttribute="leading" id="pmF-2n-CmD"/>
                             <constraint firstItem="0tA-Da-xBX" firstAttribute="top" secondItem="uhl-UX-ZbD" secondAttribute="top" id="qtp-1a-Ryg"/>
                             <constraint firstItem="0tA-Da-xBX" firstAttribute="trailing" secondItem="uhl-UX-ZbD" secondAttribute="trailing" id="w3g-la-3lx"/>
@@ -154,9 +211,14 @@
                         <viewLayoutGuide key="safeArea" id="uhl-UX-ZbD"/>
                     </view>
                     <connections>
+                        <outlet property="backwardVideoButton" destination="jtz-iW-1Ab" id="MPq-Ik-e5w"/>
                         <outlet property="detailTableView" destination="ERt-EU-S5K" id="Htf-Zg-dwy"/>
+                        <outlet property="forwardVideoButton" destination="srf-9C-DKb" id="f1c-uB-WiA"/>
+                        <outlet property="playVideoButton" destination="TdA-IH-4cv" id="ffY-ph-MS5"/>
                         <outlet property="playlistTableView" destination="Rf9-3X-djU" id="RYJ-6G-4Bl"/>
                         <outlet property="playlistView" destination="gCw-R7-S2y" id="FVE-iX-WDL"/>
+                        <outlet property="remoteVideoView" destination="hMC-UN-9U3" id="xbx-yc-dG0"/>
+                        <outlet property="tapPlayerViewButton" destination="VsU-iw-Qd4" id="9mA-s2-0BM"/>
                         <outlet property="videoView" destination="0tA-Da-xBX" id="ZSV-5W-grl"/>
                     </connections>
                 </viewController>
@@ -549,10 +611,13 @@
     <resources>
         <image name="account" width="24" height="24"/>
         <image name="appYoutubeIcon" width="715" height="305"/>
+        <image name="backward24" width="24" height="24"/>
         <image name="channel" width="24" height="24"/>
+        <image name="forward24" width="24" height="24"/>
         <image name="home" width="24" height="24"/>
         <image name="library" width="24" height="24"/>
         <image name="mail box" width="24" height="24"/>
+        <image name="play24" width="24" height="24"/>
         <image name="plus" width="30" height="30"/>
         <image name="search" width="50" height="50"/>
         <image name="xmark.circle" width="128" height="121"/>

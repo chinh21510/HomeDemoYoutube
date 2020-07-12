@@ -16,7 +16,13 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var detailTableView: UITableView!
     @IBOutlet weak var playlistTableView: UITableView!
     @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var tapPlayerViewButton: UIButton!
+    @IBOutlet weak var remoteVideoView: UIView!
+    @IBOutlet weak var playVideoButton: UIButton!
+    @IBOutlet weak var forwardVideoButton: UIButton!
+    @IBOutlet weak var backwardVideoButton: UIButton!
     
+    var player: AVPlayer?
     var viewController = ViewController()
     var suggestVideos = [Video]()
     var channel = ChannelVideo(title: String(), thumbnails: String(), subscriberCount: Int())
@@ -47,6 +53,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         self.detailTableView.rowHeight = UITableView.automaticDimension
         playlistView.layer.cornerRadius = 10
         playlistTableView.layer.cornerRadius = 10
+        remoteVideoView.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,7 +147,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestChannel() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyARTpkE7fWsIHXAXQfueeNFnoqPWfTuueY")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyBYzuJwfh29E1TevQeXXnG7K_ae1EJ5PcE")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -163,14 +170,14 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestSuggestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyARTpkE7fWsIHXAXQfueeNFnoqPWfTuueY")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyBYzuJwfh29E1TevQeXXnG7K_ae1EJ5PcE")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
             var videos = [Video]()
             for item in items {
                 let id = item["id"] as! [String: Any]
-                let videoId = id["videoId"] as! String
+                var videoId = ""
                 let snippet = item["snippet"] as! [String: Any]
                 let channelId = snippet["channelId"] as! String
                 let publishedAt = snippet["publishedAt"] as! String
@@ -180,7 +187,12 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 let medium = thumbnails["medium"] as! [String: Any]
                 let url = medium["url"] as! String
                 let channelTitle = snippet["channelTitle"] as! String
-                
+                let kind = id["kind"] as! String
+                if kind == "youtube#channel" {
+                    videoId = ""
+                } else {
+                    videoId = id["videoId"] as! String
+                }
                 let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0, id: videoId)
                 videos.append(video)
             }
@@ -235,4 +247,28 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
             player.play()
         }
     }
+    
+    @IBAction func tapPlayerView(_ sender: Any) {
+//        remoteVideoView.alpha = 1
+//        remoteVideoView.isHidden = false
+//        UIView.animate(withDuration: 5, animations: { () -> Void in
+//            self.remoteVideoView.alpha = 0
+//        })
+         UIView.transition(with: remoteVideoView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.remoteVideoView.isHidden = false
+           })
+    }
+   
+
+    @IBAction func tapPlayButton(_ sender: Any) {
+//        player!.pause()
+        print(1)
+    }
+
+    @IBAction func tapForwardButton(_ sender: Any) {
+    }
+
+    @IBAction func tapBackwardButton(_ sender: Any) {
+    }
+    
 }
