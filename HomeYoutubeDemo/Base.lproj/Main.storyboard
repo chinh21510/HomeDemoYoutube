@@ -135,7 +135,7 @@
                                             <action selector="tapPlayButton:" destination="IdR-Qz-lki" eventType="touchUpInside" id="9vD-9H-UrR"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiS-dw-pTW">
+                                    <button hidden="YES" opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiS-dw-pTW">
                                         <rect key="frame" x="191" y="111" width="24" height="24"/>
                                         <state key="normal" image="pause24"/>
                                         <connections>

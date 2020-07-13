@@ -128,7 +128,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func requestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyBYzuJwfh29E1TevQeXXnG7K_ae1EJ5PcE")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/videos?part=snippet%20%2C%20contentDetails%2C%20statistics&chart=mostPopular&maxResults=50&key=AIzaSyDMsa__dst0mqPPaXvcORR0r6ogPUHRRgA")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -138,8 +138,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let statistics = item["statistics"] as! [String: Any]
                 let publishedAt = snippet["publishedAt"] as! String
                 let viewCount = Int(statistics["viewCount"] as! String)!
-                let likeCount = Int(statistics["likeCount"] as! String)!
-                let dislikeCount = Int(statistics["dislikeCount"] as! String)!
+                let likeCount = statistics["likeCount"] as? Int ?? 0
+                let dislikeCount = statistics["dislikeCount"] as? Int ?? 0
                 let title = snippet["title"] as! String
                 let description = snippet["description"] as! String
                 let channelId = snippet["channelId"] as! String

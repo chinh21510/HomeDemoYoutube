@@ -15,17 +15,20 @@ class PlaylistViewController: UIViewController, UITableViewDataSource {
     var videos = [Video]()
     var namePlaylist = String()
     var viewController = ViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         
     }
+    
     func setupUI() {
         playlistTableView.dataSource = self
         playlistTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
         playlistTableView.rowHeight = 130
         playlistLabel.text = namePlaylist
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videos.count
     }
@@ -44,4 +47,5 @@ class PlaylistViewController: UIViewController, UITableViewDataSource {
         cell.publishedAtLabel.text = "\(viewCount) views \u{2022} \(publishedAt)"
         return cell
     }
+    
 }

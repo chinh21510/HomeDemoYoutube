@@ -72,8 +72,6 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 return 150
             } else if indexPath.row == 1 {
                 return 80
-            } else if indexPath.row == 2 {
-                return UITableView.automaticDimension
             } else if indexPath.row >= 3 {
                 return 130
             }
@@ -148,7 +146,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestChannel() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyBYzuJwfh29E1TevQeXXnG7K_ae1EJ5PcE")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyDMsa__dst0mqPPaXvcORR0r6ogPUHRRgA")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -171,7 +169,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestSuggestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyBYzuJwfh29E1TevQeXXnG7K_ae1EJ5PcE")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyDMsa__dst0mqPPaXvcORR0r6ogPUHRRgA")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -213,7 +211,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     
     func clickLikeButton() {
         for playlist in namesPlaylist {
-            if playlist.name == "Loda" {
+            if playlist.name == "Favorite Videos" {
                 try? realm!.write {
                     playlist.favoriteVideos.append(detailVideo)
                 }
@@ -231,9 +229,11 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         if tableView == playlistTableView {
             let playlist = namesPlaylist[indexPath.row]
             try? realm!.write {
-                playlist.favoriteVideos.append(detailVideo)
+                playlist.favoriteVideos.insert(detailVideo, at: 0)
             }
             playlistView.isHidden = true
+            videoView.alpha = 1
+            detailTableView.alpha = 1
         }
     }
     
