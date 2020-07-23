@@ -34,7 +34,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         resultVideoTableView.dataSource = self
         resultVideoTableView.delegate = self
         resultVideoTableView.isHidden = true
-        resultVideoTableView.rowHeight = 130
+        resultVideoTableView.rowHeight = 120
         suggestionTableView.separatorStyle = .none
     }
     
@@ -129,6 +129,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             let url = URL(string: video.thumbnails)
             let data = try? Data(contentsOf: url!)
             cell.thumbnailsImage.image = UIImage(data: data!)
+            cell.thumbnailsImage.layer.cornerRadius = 8
+            cell.thumbnailsImage.contentMode = UIView.ContentMode.scaleAspectFill
             cell.titleLabel.text = video.title
             cell.channelTitleLabel.text = video.channelTitle
             let date = viewController.convertPublishing(publishedAt: video.publishedAt)

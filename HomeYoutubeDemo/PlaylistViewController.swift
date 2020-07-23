@@ -19,14 +19,14 @@ class PlaylistViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
     }
     
     func setupUI() {
         playlistTableView.dataSource = self
         playlistTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
-        playlistTableView.rowHeight = 130
+        playlistTableView.rowHeight = 120
         playlistLabel.text = namePlaylist
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,6 +39,8 @@ class PlaylistViewController: UIViewController, UITableViewDataSource {
         let url = URL(string: video.thumbnails)
         let data = try? Data(contentsOf: url!)
         cell.thumbnailsImage.image = UIImage(data: data!)
+        cell.thumbnailsImage.contentMode = UIView.ContentMode.scaleAspectFill
+        cell.thumbnailsImage.layer.cornerRadius = 8
         cell.channelTitleLabel.text = video.channelTitle
         cell.titleLabel.text = video.title
         let date = viewController.convertPublishing(publishedAt: video.publishedAt)

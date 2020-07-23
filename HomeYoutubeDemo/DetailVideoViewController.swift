@@ -73,7 +73,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
             } else if indexPath.row == 1 {
                 return 80
             } else if indexPath.row >= 3 {
-                return 130
+                return 120
             }
             return UITableView.automaticDimension
         } else {
@@ -122,6 +122,8 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 let date = viewController.convertPublishing(publishedAt: video.publishedAt)
                 let publishedAt = viewController.getElapsedInterval(date: date)
                 cell.publishedAtLabel.text = "\(video.viewCount) views \u{2022} \(publishedAt)"
+                cell.thumbnailsImage.contentMode = UIView.ContentMode.scaleAspectFill
+                cell.thumbnailsImage.layer.cornerRadius = 8
                 return cell
             }
         } else if tableView == playlistTableView {

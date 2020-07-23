@@ -26,7 +26,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource {
     func setupUI() {
         historyTableView.dataSource = self
         historyTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
-        historyTableView.rowHeight = 130
+        historyTableView.rowHeight = 120
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,6 +39,8 @@ class HistoryViewController: UIViewController, UITableViewDataSource {
         let url = URL(string: video.thumbnails)
         let data = try? Data(contentsOf: url!)
         cell.thumbnailsImage.image = UIImage(data: data!)
+        cell.thumbnailsImage.layer.cornerRadius = 8
+        cell.thumbnailsImage.contentMode = UIView.ContentMode.scaleAspectFill
         cell.channelTitleLabel.text = video.channelTitle
         cell.titleLabel.text = video.title
         let date = viewController.convertPublishing(publishedAt: video.publishedAt)
