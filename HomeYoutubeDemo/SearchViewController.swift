@@ -36,6 +36,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         resultVideoTableView.isHidden = true
         resultVideoTableView.rowHeight = 120
         suggestionTableView.separatorStyle = .none
+        setupNavigationBarItem()
+    }
+    
+    private func setupNavigationBarItem() {
+        navigationItem.title = "Search"
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -72,7 +77,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func requestSearchResult() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyDMsa__dst0mqPPaXvcORR0r6ogPUHRRgA")
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=\(searchBarText)&key=AIzaSyDw467uImMBNEdqsUflKGgG7aaRlGgq3zo")
         let task = URLSession.shared.dataTask(with: url!) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]

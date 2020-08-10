@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import RealmSwift
 
-class HistoryViewController: UIViewController, UITableViewDataSource {
+class HistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditVideo {
+   
+    
     @IBOutlet weak var historyTableView: UITableView!
+    
+    let realm = try? Realm()
+    var namesPlaylist: Results<Playlist>!
     var historyVideos = [Video]()
     var viewController = ViewController()
-
+    var videoChoosed = Video()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        namesPlaylist = realm!.objects(Playlist.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,6 +32,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource {
     
     func setupUI() {
         historyTableView.dataSource = self
+        historyTableView.delegate = self
         historyTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
         historyTableView.rowHeight = 120
     }
@@ -43,6 +51,7 @@ class HistoryViewController: UIViewController, UITableViewDataSource {
         cell.thumbnailsImage.contentMode = UIView.ContentMode.scaleAspectFill
         cell.channelTitleLabel.text = video.channelTitle
         cell.titleLabel.text = video.title
+        cell.delegate = self
         let date = viewController.convertPublishing(publishedAt: video.publishedAt)
         let publishedAt = viewController.getElapsedInterval(date: date)
         let viewCount = viewController.reduceTheNumberOf(number: video.viewCount)
@@ -50,4 +59,30 @@ class HistoryViewController: UIViewController, UITableViewDataSource {
         return cell
     }
 
+    func displayEditView(_ sender: SuggestVideoCell) {
+        let indexPath = self.historyTableView.indexPath(for: sender)
+        self.videoChoosed = historyVideos[indexPath!.row]
+        let alert: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        let addFavoriteButton: UIAlertAction = UIAlertAction(title: "Add To Favorite", style: .destructive) { (button) in
+            for playlist in self.namesPlaylist! {
+            if playlist.name == "Favorite Video" {
+                try? self.realm!.write {
+                    playlist.favoriteVideos.insert(self.videoChoosed, at: 0)
+                }
+            }
+        }
+    }
+        let addToPlaylistButton: UIAlertAction = UIAlertAction(title: "Add To Playlist", style: .destructive) { (button) in
+            let library : LibraryViewController = self.storyboard?.instantiateViewController(identifier: "LibraryViewController") as! LibraryViewController
+            library.video = self.videoChoosed
+                self.navigationController?.pushViewController(library, animated: true)
+        }
+        let cancelButton: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(addFavoriteButton)
+        alert.addAction(addToPlaylistButton)
+        alert.addAction(cancelButton)
+        cancelButton.setValue(UIColor.red, forKey: "titleTextColor")
+        present(alert, animated: true, completion: nil)
+    }
+    
 }

@@ -12,8 +12,6 @@ class AllPlaylistViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var playlistTableView: UITableView!
     @IBOutlet weak var addNewPlaylistButton: UIButton!
-    @IBOutlet weak var textView: UIView!
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var addPlaylistView: UIView!
     
     let realm = try? Realm()
@@ -32,9 +30,7 @@ class AllPlaylistViewController: UIViewController, UITableViewDataSource, UITabl
     
     func setupUI() {
         playlistTableView.rowHeight = 100
-        playlistTableView.layer.borderWidth = 0.2
-        textView.layer.cornerRadius = 10
-        textView.isHidden = true
+        playlistTableView.layer.borderWidth = 0.15
     }
     
     private func setupNavigationBar() {
@@ -62,7 +58,7 @@ class AllPlaylistViewController: UIViewController, UITableViewDataSource, UITabl
         cell.namePlaylistLabel.text = namesPlaylist?[indexPath.row].name ?? ""
         cell.numberOfVideoLabel.text = "\(namesPlaylist[indexPath.row].favoriteVideos.count) Videos"
         if namesPlaylist[indexPath.row].favoriteVideos.count != 0 {
-            let url = URL(string: namesPlaylist[indexPath.row].favoriteVideos[0].thumbnails)!
+            let url = URL(string: namesPlaylist[indexPath.row].favoriteVideos.last!.thumbnails)!
             let data = try? Data(contentsOf: url)
             cell.playlistImageView.image = UIImage(data: data!)
         } else {
@@ -75,30 +71,31 @@ class AllPlaylistViewController: UIViewController, UITableViewDataSource, UITabl
         return cell
     }
     
-    @IBAction func createNewPlaylist(_ sender: Any) {
-        let newPlaylist = Playlist()
-        newPlaylist.name = textField.text!
-        try! realm!.write {
-            realm!.add(newPlaylist)
-        }
-        textView.isHidden = true
-        playlistTableView.isHidden = false
-        view.backgroundColor = .white
-        playlistTableView.reloadData()
-    }
-    
-    @IBAction func CancelCreateNewPlaylist(_ sender: Any) {
-        textView.isHidden = true
-        playlistTableView.isHidden = false
-        view.backgroundColor = .white
-        addPlaylistView.backgroundColor = .white
-    }
-    
     @IBAction func addNewPlaylistButton(_ sender: Any) {
-        textField.text = ""
-        textView.isHidden = false
-        playlistTableView.isHidden = true
-        view.backgroundColor = .systemGray5
-        addPlaylistView.backgroundColor = .systemGray5
+      let alert: UIAlertController = UIAlertController(title: "New Playlist", message: "Enter a name for this playlist", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter a name"
+        }
+        let createButton: UIAlertAction = UIAlertAction(title: "Create", style: .cancel) { (button) in
+            let newPlaylist = Playlist()
+            newPlaylist.name = alert.textFields![0].text!
+            try! self.realm!.write {
+                self.realm!.add(newPlaylist)
+            }
+            self.playlistTableView.reloadData()
+        }
+        let cancelButton: UIAlertAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alert.addAction(createButton)
+        alert.addAction(cancelButton)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let playlist: PlaylistViewController = storyboard?.instantiateViewController(withIdentifier: "PlaylistViewController") as! PlaylistViewController
+        playlist.namePlaylist = namesPlaylist[indexPath.row].name
+        for video in namesPlaylist[indexPath.row].favoriteVideos {
+            playlist.videos.insert(video, at: 0)
+        }
+        self.navigationController?.pushViewController(playlist, animated: true)
     }
 }

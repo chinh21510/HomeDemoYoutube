@@ -12,9 +12,7 @@ import RealmSwift
 import AVFoundation
 class DetailVideoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, YourCellDelegate {
     
-    @IBOutlet weak var playlistView: UIView!
     @IBOutlet weak var detailTableView: UITableView!
-    @IBOutlet weak var playlistTableView: UITableView!
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var tapPlayerViewButton: UIButton!
     @IBOutlet weak var remoteVideoView: UIView!
@@ -22,6 +20,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var forwardVideoButton: UIButton!
     @IBOutlet weak var backwardVideoButton: UIButton!
+    
     var timer = Timer()
     var player: AVPlayer?
     var viewController = ViewController()
@@ -48,21 +47,14 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
         detailTableView.register(UINib(nibName: "ChannelCell", bundle: nil), forCellReuseIdentifier: "ChannelCell")
         detailTableView.register(UINib(nibName: "DescriptionCell", bundle: nil), forCellReuseIdentifier: "DescriptionCell")
         detailTableView.register(UINib(nibName: "SuggestVideoCell", bundle: nil), forCellReuseIdentifier: "SuggestVideoCell")
-        playlistTableView.register(UINib(nibName: "SuggestionCell", bundle: nil), forCellReuseIdentifier: "SuggestionCell")
-        playlistTableView.dataSource = self
-        playlistTableView.delegate = self
         self.detailTableView.rowHeight = UITableView.automaticDimension
-        playlistView.layer.cornerRadius = 10
-        playlistTableView.layer.cornerRadius = 10
         remoteVideoView.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == detailTableView {
             return suggestVideos.count + 3
-        } else if tableView == playlistTableView {
-            return namesPlaylist?.count ?? 1
-        }
+        } 
         return Int()
     }
     
@@ -126,10 +118,6 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 cell.thumbnailsImage.layer.cornerRadius = 8
                 return cell
             }
-        } else if tableView == playlistTableView {
-            let cell = playlistTableView.dequeueReusableCell(withIdentifier: "SuggestionCell") as! SuggestionCell
-            cell.suggestionLabel.text = namesPlaylist?[indexPath.row].name ?? ""
-            return cell
         }
         return UITableViewCell()
     }
@@ -148,7 +136,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestChannel() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyDMsa__dst0mqPPaXvcORR0r6ogPUHRRgA")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/channels?part=snippet%2C%20statistics&id=\(detailVideo.channelId)&maxResults=10&key=AIzaSyDw467uImMBNEdqsUflKGgG7aaRlGgq3zo")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -171,7 +159,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func requestSuggestVideo() {
-        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyDMsa__dst0mqPPaXvcORR0r6ogPUHRRgA")!
+        let url = URL(string: "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=\(detailVideo.channelId)&key=AIzaSyDw467uImMBNEdqsUflKGgG7aaRlGgq3zo")!
         let task = URLSession.shared.dataTask(with: url) { data, respone, error in
             let json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
             let items = json["items"] as! [[String: Any]]
@@ -192,7 +180,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
                 if kind == "youtube#channel" {
                     videoId = ""
                 } else {
-                    videoId = id["videoId"] as! String
+                    videoId = id["videoId"] as? String ?? ""
                 }
                 let video = Video(title: title, thumbnails: url, channelTitle: channelTitle, descriptionVideo: description, channelId: channelId, viewCount: 0, duration: "", publishedAt: publishedAt, likeCount: 0, dislikeCount: 0, id: videoId)
                 videos.append(video)
@@ -206,36 +194,30 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func didPressButton() {
-        playlistView.isHidden = false
-        videoView.alpha = 0.3
-        detailTableView.alpha = 0.3
+        let alert: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        let addFavoriteButton: UIAlertAction = UIAlertAction(title: "Add To Favorite", style: .destructive) { (button) in
+            self.clickLikeButton()
+        }
+        let addToPlaylistButton: UIAlertAction = UIAlertAction(title: "Add To Playlist", style: .destructive) { (button) in
+            let library : LibraryViewController = self.storyboard?.instantiateViewController(identifier: "LibraryViewController") as! LibraryViewController
+            library.video = self.detailVideo
+            self.navigationController?.pushViewController(library, animated: true)
+        }
+        let cancelButton: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(addFavoriteButton)
+        alert.addAction(addToPlaylistButton)
+        alert.addAction(cancelButton)
+        cancelButton.setValue(UIColor.red, forKey: "titleTextColor")
+        present(alert, animated: true, completion: nil)
     }
     
     func clickLikeButton() {
         for playlist in namesPlaylist {
-            if playlist.name == "Favorite Videos" {
+            if playlist.name == "Favorite Video" {
                 try? realm!.write {
-                    playlist.favoriteVideos.append(detailVideo)
+                    playlist.favoriteVideos.insert(self.detailVideo, at: 0)
                 }
             }
-        }
-    }
-    
-    @IBAction func turnOffPlaylistTableView(_ sender: Any) {
-        playlistView.isHidden = true
-        videoView.alpha = 1
-        detailTableView.alpha = 1
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == playlistTableView {
-            let playlist = namesPlaylist[indexPath.row]
-            try? realm!.write {
-                playlist.favoriteVideos.insert(detailVideo, at: 0)
-            }
-            playlistView.isHidden = true
-            videoView.alpha = 1
-            detailTableView.alpha = 1
         }
     }
     
@@ -256,7 +238,7 @@ class DetailVideoViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBAction func tapPlayerView(_ sender: Any) {
         remoteVideoView.isHidden = false
-        timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(displayTap), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(displayTap), userInfo: nil, repeats: false)
     }
    
     

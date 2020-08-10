@@ -11,25 +11,22 @@ import RealmSwift
 
 class LibraryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
    
-    @IBOutlet weak var textView: UIView!
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var playlistCollectionView: UICollectionView!
     @IBOutlet weak var seeAllButton: UIButton!
     
     let realm = try? Realm()
     var namesPlaylist: Results<Playlist>!
     var playlistVideo: Results<Video>!
+    var video = Video()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textView.isHidden = true
         loadPlaylist()
         playlistCollectionView.dataSource = self
         playlistCollectionView.register(UINib(nibName: "PlaylistCollectionCell", bundle: nil), forCellWithReuseIdentifier: "PlaylistCollectionCell")
         playlistCollectionView.delegate = self
         setupUI()
         setupNavigationBarItem()
-        
     }
     
     private func setupNavigationBarItem() {
@@ -37,7 +34,6 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func setupUI() {
-        textView.layer.cornerRadius = 10
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)
         layout.minimumInteritemSpacing = 10
@@ -77,7 +73,7 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
             cell.namePlaylistLabel.text = namesPlaylist?[indexPath.row].name ?? ""
             cell.numberOfVideosLabel.text = "\(namesPlaylist[indexPath.row].favoriteVideos.count) Videos"
             if namesPlaylist[indexPath.row].favoriteVideos.count != 0 {
-                let url = URL(string: namesPlaylist[indexPath.row].favoriteVideos[0].thumbnails)!
+                let url = URL(string: namesPlaylist[indexPath.row].favoriteVideos.last!.thumbnails)!
                 let data = try? Data(contentsOf: url)
                 cell.backgroundImage.image = UIImage(data: data!)
             } else {
@@ -97,24 +93,6 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
         self.navigationController?.pushViewController(allPlaylist, animated: true)
     }
     
-    @IBAction func cancelCreatePlaylistButton(_ sender: Any) {
-        textView.isHidden = true
-        playlistCollectionView.isHidden = false
-        view.backgroundColor = .white
-    }
-    
-    @IBAction func createNewPlaylist(_ sender: Any) {
-        let newPlaylist = Playlist()
-        newPlaylist.name = textField.text!
-        try! realm!.write {
-            realm!.add(newPlaylist)
-        }
-        textView.isHidden = true
-        playlistCollectionView.isHidden = false
-        view.backgroundColor = .white
-        playlistCollectionView.reloadData()
-    }
-    
     func loadPlaylist() {
         namesPlaylist = realm!.objects(Playlist.self).sorted(byKeyPath: "name")
         playlistCollectionView.reloadData()
@@ -122,17 +100,38 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == namesPlaylist.count {
-            textField.text = ""
-            textView.isHidden = false
-            playlistCollectionView.isHidden = true
-            view.backgroundColor = .systemGray5
-        } else {
-            let playlist: PlaylistViewController = storyboard?.instantiateViewController(withIdentifier: "PlaylistViewController") as! PlaylistViewController
-            playlist.namePlaylist = namesPlaylist[indexPath.row].name
-            for video in namesPlaylist[indexPath.row].favoriteVideos {
-                playlist.videos.insert(video, at: 0)
+            let alert: UIAlertController = UIAlertController(title: "New Playlist", message: "Enter a name for this playlist", preferredStyle: .alert)
+            alert.addTextField { (textField) in
+                textField.placeholder = "Enter a name"
             }
-            self.navigationController?.pushViewController(playlist, animated: true)
+            let createButton: UIAlertAction = UIAlertAction(title: "Create", style: .cancel) { (button) in
+                let newPlaylist = Playlist()
+                newPlaylist.name = alert.textFields![0].text!
+                try! self.realm!.write {
+                    self.realm!.add(newPlaylist)
+                }
+                self.playlistCollectionView.reloadData()
+            }
+            let cancelButton: UIAlertAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alert.addAction(createButton)
+            alert.addAction(cancelButton)
+            present(alert, animated: true, completion: nil)
+        } else {
+            if video.title == "" {
+                let playlist: PlaylistViewController = storyboard?.instantiateViewController(withIdentifier: "PlaylistViewController") as! PlaylistViewController
+                playlist.namesPlaylist = namesPlaylist
+                playlist.namePlaylist = namesPlaylist[indexPath.row].name
+                for video in namesPlaylist[indexPath.row].favoriteVideos {
+                    playlist.videos.insert(video, at: 0)
+                }
+                self.navigationController?.pushViewController(playlist, animated: true)
+            } else {
+                try? realm!.write {
+                    namesPlaylist[indexPath.row].favoriteVideos.insert(video, at: 0)
+                    video = Video()
+                }
+                playlistCollectionView.reloadData()
+            }
         }
     }
 }
